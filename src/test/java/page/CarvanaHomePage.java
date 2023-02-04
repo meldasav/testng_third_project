@@ -12,34 +12,33 @@ public class CarvanaHomePage {
         PageFactory.initElements(Driver.getDriver(),this);
     }
 
-  @FindBy(xpath = "//div[@data-qa='navigation-wrapper']/div/a")
-    public List<WebElement> navigationSectionItems;
+  @FindBy(xpath = "//div[@data-qa='menu-wrapper']")
+  public List<WebElement> navigationSectionItems;
 
-  @FindBy(xpath = "//div[@data-qa='header-menu-wrapper']/div[1]")
-    public WebElement carVaNaLogo;
+  @FindBy(css = "div[data-qa='header-menu-wrapper']>div:nth-child(1)")
+  public WebElement carVaNaLogo;
 
   @FindBy(css = "a[data-cv-test='headerSignInLink']")
     public WebElement signInLink;
 
-  @FindBy(css = "div[data-cv-test='Header.Modal']")
-    public WebElement signInModel;
+  @FindBy(css="input[type='email']")
+    public WebElement emailInputBox;
 
-  @FindBy(id="usernameField")
-    public WebElement userNameInputBox;
+  @FindBy(css = "input[label='Email']")
+    public  WebElement emailLabel;
 
-  @FindBy(css = "label[for='usernameField']")
-    public  WebElement userNameLabel;
-
-    @FindBy(id="passwordField")
+  @FindBy(css = "button[data-testid='Button']")
+  public WebElement continueButton;
+    @FindBy(css="input[type='password']")
     public WebElement passwordInputBox;
 
-    @FindBy(css = "label[for='passwordField']")
+    @FindBy(css = "input[label='Password']")
     public  WebElement passwordLabel;
 
-    @FindBy(css = "button[data-cv='sign-in-submit']")
+    @FindBy(css = "button[data-testid='Button']")
     public WebElement signInButton;
 
-    @FindBy(css="div[data-qa='error-message-container']")
+    @FindBy(id="error-banner")
     public WebElement errorMessage;
 
     @FindBy(xpath = "//div[@data-qa='header-items']/a[1]")

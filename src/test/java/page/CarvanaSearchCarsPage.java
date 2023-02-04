@@ -21,14 +21,12 @@ public class CarvanaSearchCarsPage {
     @FindBy(xpath = "//div[@data-qa='menu-flex']/button")
     public List<WebElement> filterOptions;
 
-    @FindBy(xpath = "//section[@id='results-section']/div")
-    public List<WebElement> resultImages;
-
-    @FindBy(css = "div[class='tk-frame top-frame']")
-    public List<WebElement> topFrameElements;
-
-    @FindBy(css = "div[class='tk-frame middle-frame']")
-    public List<WebElement> middleFrameElements;
+    @FindBy(css = "div[data-qa='base-inventory-type']")
+    public List<WebElement> inventoryType;
+    @FindBy(css = "picture[data-qa='base-vehicle-image']>img")
+    public List<WebElement> tileImages;
+    @FindBy(css = "div[data-qa='base-favorite-vehicle']")
+    public List<WebElement> addFavoriteIcon;
 
     @FindBy(css = ".year-make")
     public List<WebElement> year_ModelTexts;
@@ -36,7 +34,7 @@ public class CarvanaSearchCarsPage {
     @FindBy(css = ".trim-mileage")
     public List<WebElement> trimMileageInformation;
 
-    @FindBy(css = "div[class='price ']")
+    @FindBy(css = "div[data-testid='price']")
     public List<WebElement> prices;
 
     @FindBy(css = ".monthly-payment")
@@ -45,8 +43,6 @@ public class CarvanaSearchCarsPage {
     @FindBy(css = ".down-payment")
     public List<WebElement> downPayments;
 
-    @FindBy(css = "div[class*='bottom-fram']")
-    public List<WebElement> bottomFrameElements;
 
     @FindBy(css = "div[class*='bottom-frame'] div:nth-child(2)")
     public List<WebElement> deliveryChip;

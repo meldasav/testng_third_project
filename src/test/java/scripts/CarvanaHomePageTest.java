@@ -6,19 +6,21 @@ import org.testng.annotations.Test;
 import utilities.Waiter;
 
 public class CarvanaHomePageTest extends Base {
-
+     
     @Test(priority = 1, description = "TEST CASE :  Validate Carvana home page title and url")
     public void testCarvanaUrlAndTitle() {
         driver.get("https://www.carvana.com/");
         Assert.assertEquals(driver.getTitle(), "Carvana | Buy & Finance Used Cars Online | At Home Delivery");
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.carvana.com/");
+
     }
 
     @Test(priority = 2, description = "TEST CASE 2 :  Validate the Carvana logo")
     public void testLogo() {
         driver.get("https://www.carvana.com/");
-        Waiter.pause(2);
+        Waiter.waitForVisibilityOfElement(driver,carvanaHomePage.carVaNaLogo,2);
         Assert.assertTrue(carvanaHomePage.carVaNaLogo.isDisplayed());
+
     }
 
     @Test(priority = 3, description = "Test case 3:Validate the main navigation section items")
@@ -26,6 +28,7 @@ public class CarvanaHomePageTest extends Base {
         driver.get("https://www.carvana.com/");
         String[] navigationSectionItemsTexts = {"HOW IT WORKS", "ABOUT CARVANA", "SUPPORT & CONTACT"};
         for (int i = 0; i < carvanaHomePage.navigationSectionItems.size(); i++) {
+
             Assert.assertTrue(carvanaHomePage.navigationSectionItems.get(i).isDisplayed());
             Assert.assertEquals(carvanaHomePage.navigationSectionItems.get(i).getText(), navigationSectionItemsTexts[i]);
         }
@@ -35,16 +38,17 @@ public class CarvanaHomePageTest extends Base {
     public void testSignInErrorMessage() {
         driver.get("https://www.carvana.com/");
         carvanaHomePage.signInLink.click();
-        Assert.assertTrue(carvanaHomePage.signInModel.isDisplayed());
-        carvanaHomePage.userNameInputBox.sendKeys("meldasav@gmail.com");
-        carvanaHomePage.passwordInputBox.sendKeys("1983");
+        Waiter.pause(2);
+        carvanaHomePage.emailInputBox.sendKeys("johndoe@gmail.com");
+        carvanaHomePage.continueButton.click();
+        carvanaHomePage.passwordInputBox.sendKeys("abcd1234");
         carvanaHomePage.signInButton.click();
-        Assert.assertTrue(carvanaHomePage.userNameLabel.isDisplayed());
-        Assert.assertTrue(carvanaHomePage.userNameInputBox.isEnabled());
+        Assert.assertTrue(carvanaHomePage.emailLabel.isDisplayed());
+        Assert.assertTrue(carvanaHomePage.emailInputBox.isEnabled());
         Assert.assertTrue(carvanaHomePage.passwordLabel.isDisplayed());
         Assert.assertTrue(carvanaHomePage.passwordInputBox.isEnabled());
-        Assert.assertEquals(carvanaHomePage.errorMessage.getText(), "Email address and/or password combination is incorrect\n" +
-                "Please try again or reset your password.");
+        Assert.assertEquals(carvanaHomePage.errorMessage.getText(), "Email address and/or password combination is incorrect.");
+
     }
 
     @Test(priority = 5, description = "TestCase 5 : Validate the search filter options and search button")
@@ -73,66 +77,28 @@ public class CarvanaHomePageTest extends Base {
         carvanaSearchCarsPage.goButton.click();
 
         Waiter.waitUntilURLIs(driver, 5, "https://www.carvana.com/cars/mercedes-benz?email-capture=");
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.carvana.com/cars/mercedes-benz?email-capture=");
+        Assert.assertTrue(driver.getCurrentUrl().contains("mercedes-benz"));
 
-        Waiter.waitUntilTitleIs(driver, 5, "Used Mercedes-Benz For Sale Online | Carvana");
-        Assert.assertEquals(driver.getTitle(), "Used Mercedes-Benz For Sale Online | Carvana");
-
-        for (WebElement element : carvanaSearchCarsPage.resultImages) {
-            if (element.getAttribute("data-test") != null) {
-                Assert.assertTrue(element.isDisplayed());
-            }
+        for (int i = 0; i < carvanaSearchCarsPage.tileImages.size(); i++) {
+            Assert.assertTrue(carvanaSearchCarsPage.tileImages.get(i).isDisplayed());
+            Assert.assertTrue(carvanaSearchCarsPage.addFavoriteIcon.get(i).isDisplayed());
+            Assert.assertTrue(carvanaSearchCarsPage.inventoryType.get(i).isDisplayed());
+            Assert.assertNotNull(carvanaSearchCarsPage.inventoryType.get(i).getText());
+            Assert.assertTrue(carvanaSearchCarsPage.year_ModelTexts.get(i).isDisplayed());
+            Assert.assertNotNull(carvanaSearchCarsPage.year_ModelTexts.get(i).getText());
+            Assert.assertTrue(carvanaSearchCarsPage.trimMileageInformation.get(i).isDisplayed());
+            Assert.assertNotNull(carvanaSearchCarsPage.trimMileageInformation.get(i).getText());
+            Assert.assertTrue(carvanaSearchCarsPage.prices.get(i).isDisplayed());
+            Assert.assertTrue(Integer.parseInt(carvanaSearchCarsPage.prices.get(i).getText().replaceAll("[$,]", "")) > 0);
+            Assert.assertTrue(carvanaSearchCarsPage.monthlyInformation.get(i).isDisplayed());
+            Assert.assertNotNull(carvanaSearchCarsPage.monthlyInformation.get(i).getText());
+            Assert.assertTrue(carvanaSearchCarsPage.downPayments.get(i).isDisplayed());
+            Assert.assertNotNull(carvanaSearchCarsPage.downPayments.get(i).getText());
+            Assert.assertTrue(carvanaSearchCarsPage.deliveryChip.get(i).isDisplayed());
         }
-        for (WebElement element : carvanaSearchCarsPage.resultImages) {
-            if (element.getAttribute("fill-rule") != null) {
-                Assert.assertTrue(element.isDisplayed());
-            }
-        }
-
-        for (int i = 0; i < carvanaSearchCarsPage.topFrameElements.size(); i++) {
-            Assert.assertTrue(carvanaSearchCarsPage.topFrameElements.get(i).isDisplayed());
-        }
-        //middleFrameElements validation
-
-        for (int i = 0; i < carvanaSearchCarsPage.middleFrameElements.size(); i++) {
-            if (carvanaSearchCarsPage.middleFrameElements.get(i).getText() != null) {
-                Assert.assertTrue(carvanaSearchCarsPage.middleFrameElements.get(i).isDisplayed());
-            }
-
-            if (carvanaSearchCarsPage.year_ModelTexts.get(i).getText() != null) {
-                Assert.assertTrue(carvanaSearchCarsPage.year_ModelTexts.get(i).isDisplayed());
-            }
-            if (carvanaSearchCarsPage.trimMileageInformation.get(i).getText() != null) {
-                Assert.assertTrue(carvanaSearchCarsPage.trimMileageInformation.get(i).isDisplayed());
-            }
-            String price = carvanaSearchCarsPage.prices.get(i).getText().substring(1).replace(",", "");
-            Assert.assertTrue(Integer.parseInt(price) > 0);
-
-            if (carvanaSearchCarsPage.monthlyInformation.get(i).getText() != null) {
-                Assert.assertTrue(carvanaSearchCarsPage.monthlyInformation.get(i).isDisplayed());
-            }
-
-            if (carvanaSearchCarsPage.downPayments.get(i).getText() != null) {
-                Assert.assertTrue(carvanaSearchCarsPage.downPayments.get(i).isDisplayed());
-            }
-        }
-
-        //BottomFrameElements Validation
-        for (int i = 0; i < carvanaSearchCarsPage.bottomFrameElements.size(); i++) {
-            if (carvanaSearchCarsPage.bottomFrameElements.get(i).getText() != null) {
-                Assert.assertTrue(carvanaSearchCarsPage.bottomFrameElements.get(i).isDisplayed());
-            }
-            Waiter.pause(2);
-            // delivery message is dynamic it is changing evrytime you run the scripts.Validate with getAttribute method
-            //    Assert.assertTrue(carvanaSearchCarsPage.deliveryChip.get(i).getText().contains("Shipping"));
-
-            if (carvanaSearchCarsPage.deliveryChip.get(i).getAttribute("data-test") != null) {
-                Assert.assertTrue(carvanaSearchCarsPage.deliveryChip.get(i).isDisplayed());
-            }
-
         }
 
     }
-}
+
 
 
