@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import utilities.Waiter;
 
 public class CarvanaHomePageTest extends Base {
-     
+
     @Test(priority = 1, description = "TEST CASE :  Validate Carvana home page title and url")
     public void testCarvanaUrlAndTitle() {
         driver.get("https://www.carvana.com/");
@@ -18,7 +18,7 @@ public class CarvanaHomePageTest extends Base {
     @Test(priority = 2, description = "TEST CASE 2 :  Validate the Carvana logo")
     public void testLogo() {
         driver.get("https://www.carvana.com/");
-        Waiter.waitForVisibilityOfElement(driver,carvanaHomePage.carVaNaLogo,2);
+        Waiter.waitForVisibilityOfElement(driver, carvanaHomePage.carVaNaLogo, 2);
         Assert.assertTrue(carvanaHomePage.carVaNaLogo.isDisplayed());
 
     }
@@ -79,26 +79,29 @@ public class CarvanaHomePageTest extends Base {
         Waiter.waitUntilURLIs(driver, 5, "https://www.carvana.com/cars/mercedes-benz?email-capture=");
         Assert.assertTrue(driver.getCurrentUrl().contains("mercedes-benz"));
 
-        for (int i = 0; i < carvanaSearchCarsPage.tileImages.size(); i++) {
-            Assert.assertTrue(carvanaSearchCarsPage.tileImages.get(i).isDisplayed());
-            Assert.assertTrue(carvanaSearchCarsPage.addFavoriteIcon.get(i).isDisplayed());
-            Assert.assertTrue(carvanaSearchCarsPage.inventoryType.get(i).isDisplayed());
-            Assert.assertNotNull(carvanaSearchCarsPage.inventoryType.get(i).getText());
-            Assert.assertTrue(carvanaSearchCarsPage.year_ModelTexts.get(i).isDisplayed());
-            Assert.assertNotNull(carvanaSearchCarsPage.year_ModelTexts.get(i).getText());
-            Assert.assertTrue(carvanaSearchCarsPage.trimMileageInformation.get(i).isDisplayed());
-            Assert.assertNotNull(carvanaSearchCarsPage.trimMileageInformation.get(i).getText());
-            Assert.assertTrue(carvanaSearchCarsPage.prices.get(i).isDisplayed());
-            Assert.assertTrue(Integer.parseInt(carvanaSearchCarsPage.prices.get(i).getText().replaceAll("[$,]", "")) > 0);
-            Assert.assertTrue(carvanaSearchCarsPage.monthlyInformation.get(i).isDisplayed());
-            Assert.assertNotNull(carvanaSearchCarsPage.monthlyInformation.get(i).getText());
-            Assert.assertTrue(carvanaSearchCarsPage.downPayments.get(i).isDisplayed());
-            Assert.assertNotNull(carvanaSearchCarsPage.downPayments.get(i).getText());
-            Assert.assertTrue(carvanaSearchCarsPage.deliveryChip.get(i).isDisplayed());
-        }
+        while (carvanaSearchCarsPage.nextButton.isEnabled()) {
+
+            for (int i = 0; i < carvanaSearchCarsPage.tileImages.size(); i++) {
+                Assert.assertTrue(carvanaSearchCarsPage.tileImages.get(i).isDisplayed());
+                Assert.assertTrue(carvanaSearchCarsPage.addFavoriteIcon.get(i).isDisplayed());
+                Assert.assertTrue(carvanaSearchCarsPage.inventoryType.get(i).isDisplayed());
+                Assert.assertNotNull(carvanaSearchCarsPage.inventoryType.get(i).getText());
+                Assert.assertTrue(carvanaSearchCarsPage.year_ModelTexts.get(i).isDisplayed());
+                Assert.assertNotNull(carvanaSearchCarsPage.year_ModelTexts.get(i).getText());
+                Assert.assertTrue(carvanaSearchCarsPage.trimMileageInformation.get(i).isDisplayed());
+                Assert.assertNotNull(carvanaSearchCarsPage.trimMileageInformation.get(i).getText());
+                Assert.assertTrue(carvanaSearchCarsPage.prices.get(i).isDisplayed());
+                Assert.assertTrue(Integer.parseInt(carvanaSearchCarsPage.prices.get(i).getText().replaceAll("[$,]", "")) > 0);
+                Assert.assertTrue(carvanaSearchCarsPage.monthlyInformation.get(i).isDisplayed());
+                Assert.assertNotNull(carvanaSearchCarsPage.monthlyInformation.get(i).getText());
+                Assert.assertTrue(carvanaSearchCarsPage.downPayments.get(i).isDisplayed());
+                Assert.assertNotNull(carvanaSearchCarsPage.downPayments.get(i).getText());
+                Assert.assertTrue(carvanaSearchCarsPage.deliveryChip.get(i).isDisplayed());
+            }
+            carvanaSearchCarsPage.nextButton.click();
         }
 
     }
 
-
+}
 

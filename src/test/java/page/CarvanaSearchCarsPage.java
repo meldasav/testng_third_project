@@ -47,4 +47,6 @@ public class CarvanaSearchCarsPage {
     @FindBy(css = "div[class*='bottom-frame'] div:nth-child(2)")
     public List<WebElement> deliveryChip;
 
+    @FindBy(css ="svg[data-qa='arrow-forward']")
+    public WebElement nextButton;
 }
